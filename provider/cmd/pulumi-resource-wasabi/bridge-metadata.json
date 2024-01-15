@@ -1,0 +1,507 @@
+{
+    "auto-aliasing": {
+        "resources": {
+            "wasabi_access_key": {
+                "current": "wasabi:index/accessKey:AccessKey"
+            },
+            "wasabi_account_alias": {
+                "current": "wasabi:index/accountAlias:AccountAlias"
+            },
+            "wasabi_account_password_policy": {
+                "current": "wasabi:index/accountPasswordPolicy:AccountPasswordPolicy"
+            },
+            "wasabi_bucket": {
+                "current": "wasabi:index/bucket:Bucket",
+                "fields": {
+                    "cors_rule": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "allowed_headers": {
+                                    "maxItemsOne": false
+                                },
+                                "allowed_methods": {
+                                    "maxItemsOne": false
+                                },
+                                "allowed_origins": {
+                                    "maxItemsOne": false
+                                },
+                                "expose_headers": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "grant": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "permissions": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "lifecycle_rule": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "expiration": {
+                                    "maxItemsOne": true
+                                },
+                                "noncurrent_version_expiration": {
+                                    "maxItemsOne": true
+                                },
+                                "noncurrent_version_transition": {
+                                    "maxItemsOne": false
+                                },
+                                "transition": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "logging": {
+                        "maxItemsOne": false
+                    },
+                    "versioning": {
+                        "maxItemsOne": true
+                    }
+                }
+            },
+            "wasabi_bucket_object": {
+                "current": "wasabi:index/bucketObject:BucketObject"
+            },
+            "wasabi_bucket_policy": {
+                "current": "wasabi:index/bucketPolicy:BucketPolicy"
+            },
+            "wasabi_bucket_public_access_block": {
+                "current": "wasabi:index/bucketPublicAccessBlock:BucketPublicAccessBlock"
+            },
+            "wasabi_group": {
+                "current": "wasabi:index/group:Group"
+            },
+            "wasabi_group_membership": {
+                "current": "wasabi:index/groupMembership:GroupMembership",
+                "fields": {
+                    "users": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "wasabi_group_policy": {
+                "current": "wasabi:index/groupPolicy:GroupPolicy"
+            },
+            "wasabi_group_policy_attachment": {
+                "current": "wasabi:index/groupPolicyAttachment:GroupPolicyAttachment"
+            },
+            "wasabi_policy": {
+                "current": "wasabi:index/policy:Policy"
+            },
+            "wasabi_policy_attachment": {
+                "current": "wasabi:index/policyAttachment:PolicyAttachment",
+                "fields": {
+                    "groups": {
+                        "maxItemsOne": false
+                    },
+                    "roles": {
+                        "maxItemsOne": false
+                    },
+                    "users": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "wasabi_role": {
+                "current": "wasabi:index/role:Role"
+            },
+            "wasabi_role_policy": {
+                "current": "wasabi:index/rolePolicy:RolePolicy"
+            },
+            "wasabi_role_policy_attachment": {
+                "current": "wasabi:index/rolePolicyAttachment:RolePolicyAttachment"
+            },
+            "wasabi_user": {
+                "current": "wasabi:index/user:User"
+            },
+            "wasabi_user_group_membership": {
+                "current": "wasabi:index/userGroupMembership:UserGroupMembership",
+                "fields": {
+                    "groups": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "wasabi_user_login_profile": {
+                "current": "wasabi:index/userLoginProfile:UserLoginProfile"
+            },
+            "wasabi_user_policy": {
+                "current": "wasabi:index/userPolicy:UserPolicy"
+            },
+            "wasabi_user_policy_attachment": {
+                "current": "wasabi:index/userPolicyAttachment:UserPolicyAttachment"
+            }
+        },
+        "datasources": {
+            "wasabi_account_alias": {
+                "current": "wasabi:index/getAccountAlias:getAccountAlias"
+            },
+            "wasabi_bucket": {
+                "current": "wasabi:index/getBucket:getBucket"
+            },
+            "wasabi_bucket_object": {
+                "current": "wasabi:index/getBucketObject:getBucketObject"
+            },
+            "wasabi_bucket_objects": {
+                "current": "wasabi:index/getBucketObjects:getBucketObjects",
+                "fields": {
+                    "common_prefixes": {
+                        "maxItemsOne": false
+                    },
+                    "keys": {
+                        "maxItemsOne": false
+                    },
+                    "owners": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "wasabi_group": {
+                "current": "wasabi:index/getGroup:getGroup",
+                "fields": {
+                    "users": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "wasabi_policy": {
+                "current": "wasabi:index/getPolicy:getPolicy"
+            },
+            "wasabi_policy_document": {
+                "current": "wasabi:index/getPolicyDocument:getPolicyDocument",
+                "fields": {
+                    "statement": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "actions": {
+                                    "maxItemsOne": false
+                                },
+                                "condition": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "values": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "not_actions": {
+                                    "maxItemsOne": false
+                                },
+                                "not_principals": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "identifiers": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "not_resources": {
+                                    "maxItemsOne": false
+                                },
+                                "principals": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "identifiers": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "resources": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "wasabi_role": {
+                "current": "wasabi:index/getRole:getRole"
+            },
+            "wasabi_user": {
+                "current": "wasabi:index/getUser:getUser"
+            }
+        }
+    },
+    "auto-settings": {},
+    "renames": {
+        "resources": {
+            "wasabi:index/accessKey:AccessKey": "wasabi_access_key",
+            "wasabi:index/accountAlias:AccountAlias": "wasabi_account_alias",
+            "wasabi:index/accountPasswordPolicy:AccountPasswordPolicy": "wasabi_account_password_policy",
+            "wasabi:index/bucket:Bucket": "wasabi_bucket",
+            "wasabi:index/bucketObject:BucketObject": "wasabi_bucket_object",
+            "wasabi:index/bucketPolicy:BucketPolicy": "wasabi_bucket_policy",
+            "wasabi:index/bucketPublicAccessBlock:BucketPublicAccessBlock": "wasabi_bucket_public_access_block",
+            "wasabi:index/group:Group": "wasabi_group",
+            "wasabi:index/groupMembership:GroupMembership": "wasabi_group_membership",
+            "wasabi:index/groupPolicy:GroupPolicy": "wasabi_group_policy",
+            "wasabi:index/groupPolicyAttachment:GroupPolicyAttachment": "wasabi_group_policy_attachment",
+            "wasabi:index/policy:Policy": "wasabi_policy",
+            "wasabi:index/policyAttachment:PolicyAttachment": "wasabi_policy_attachment",
+            "wasabi:index/role:Role": "wasabi_role",
+            "wasabi:index/rolePolicy:RolePolicy": "wasabi_role_policy",
+            "wasabi:index/rolePolicyAttachment:RolePolicyAttachment": "wasabi_role_policy_attachment",
+            "wasabi:index/user:User": "wasabi_user",
+            "wasabi:index/userGroupMembership:UserGroupMembership": "wasabi_user_group_membership",
+            "wasabi:index/userLoginProfile:UserLoginProfile": "wasabi_user_login_profile",
+            "wasabi:index/userPolicy:UserPolicy": "wasabi_user_policy",
+            "wasabi:index/userPolicyAttachment:UserPolicyAttachment": "wasabi_user_policy_attachment"
+        },
+        "functions": {
+            "wasabi:index/getAccountAlias:getAccountAlias": "wasabi_account_alias",
+            "wasabi:index/getBucket:getBucket": "wasabi_bucket",
+            "wasabi:index/getBucketObject:getBucketObject": "wasabi_bucket_object",
+            "wasabi:index/getBucketObjects:getBucketObjects": "wasabi_bucket_objects",
+            "wasabi:index/getGroup:getGroup": "wasabi_group",
+            "wasabi:index/getPolicy:getPolicy": "wasabi_policy",
+            "wasabi:index/getPolicyDocument:getPolicyDocument": "wasabi_policy_document",
+            "wasabi:index/getRole:getRole": "wasabi_role",
+            "wasabi:index/getUser:getUser": "wasabi_user"
+        },
+        "renamedProperties": {
+            "wasabi:config/assumeRole:assumeRole": {
+                "durationSeconds": "duration_seconds",
+                "externalId": "external_id",
+                "policyArns": "policy_arns",
+                "roleArn": "role_arn",
+                "sessionName": "session_name",
+                "transitiveTagKeys": "transitive_tag_keys"
+            },
+            "wasabi:index/BucketCorsRule:BucketCorsRule": {
+                "allowedHeaders": "allowed_headers",
+                "allowedMethods": "allowed_methods",
+                "allowedOrigins": "allowed_origins",
+                "exposeHeaders": "expose_headers",
+                "maxAgeSeconds": "max_age_seconds"
+            },
+            "wasabi:index/BucketLifecycleRule:BucketLifecycleRule": {
+                "abortIncompleteMultipartUploadDays": "abort_incomplete_multipart_upload_days",
+                "noncurrentVersionExpiration": "noncurrent_version_expiration",
+                "noncurrentVersionTransitions": "noncurrent_version_transition",
+                "transitions": "transition"
+            },
+            "wasabi:index/BucketLifecycleRuleExpiration:BucketLifecycleRuleExpiration": {
+                "expiredObjectDeleteMarker": "expired_object_delete_marker"
+            },
+            "wasabi:index/BucketLifecycleRuleNoncurrentVersionTransition:BucketLifecycleRuleNoncurrentVersionTransition": {
+                "storageClass": "storage_class"
+            },
+            "wasabi:index/BucketLifecycleRuleTransition:BucketLifecycleRuleTransition": {
+                "storageClass": "storage_class"
+            },
+            "wasabi:index/BucketLogging:BucketLogging": {
+                "targetBucket": "target_bucket",
+                "targetPrefix": "target_prefix"
+            },
+            "wasabi:index/BucketVersioning:BucketVersioning": {
+                "mfaDelete": "mfa_delete"
+            },
+            "wasabi:index/ProviderAssumeRole:ProviderAssumeRole": {
+                "durationSeconds": "duration_seconds",
+                "externalId": "external_id",
+                "policyArns": "policy_arns",
+                "roleArn": "role_arn",
+                "sessionName": "session_name",
+                "transitiveTagKeys": "transitive_tag_keys"
+            },
+            "wasabi:index/accessKey:AccessKey": {
+                "encryptedSecret": "encrypted_secret",
+                "keyFingerprint": "key_fingerprint",
+                "pgpKey": "pgp_key",
+                "sesSmtpPasswordV4": "ses_smtp_password_v4"
+            },
+            "wasabi:index/accountAlias:AccountAlias": {
+                "accountAlias": "account_alias"
+            },
+            "wasabi:index/accountPasswordPolicy:AccountPasswordPolicy": {
+                "allowUsersToChangePassword": "allow_users_to_change_password",
+                "expirePasswords": "expire_passwords",
+                "hardExpiry": "hard_expiry",
+                "maxPasswordAge": "max_password_age",
+                "minimumPasswordLength": "minimum_password_length",
+                "passwordReusePrevention": "password_reuse_prevention",
+                "requireLowercaseCharacters": "require_lowercase_characters",
+                "requireNumbers": "require_numbers",
+                "requireSymbols": "require_symbols",
+                "requireUppercaseCharacters": "require_uppercase_characters"
+            },
+            "wasabi:index/bucket:Bucket": {
+                "bucketDomainName": "bucket_domain_name",
+                "bucketPrefix": "bucket_prefix",
+                "bucketRegionalDomainName": "bucket_regional_domain_name",
+                "corsRules": "cors_rule",
+                "forceDestroy": "force_destroy",
+                "grants": "grant",
+                "lifecycleRules": "lifecycle_rule",
+                "loggings": "logging",
+                "requestPayer": "request_payer"
+            },
+            "wasabi:index/bucketObject:BucketObject": {
+                "cacheControl": "cache_control",
+                "contentBase64": "content_base64",
+                "contentDisposition": "content_disposition",
+                "contentEncoding": "content_encoding",
+                "contentLanguage": "content_language",
+                "contentType": "content_type",
+                "forceDestroy": "force_destroy",
+                "storageClass": "storage_class",
+                "versionId": "version_id"
+            },
+            "wasabi:index/bucketPublicAccessBlock:BucketPublicAccessBlock": {
+                "blockPublicAcls": "block_public_acls",
+                "blockPublicPolicy": "block_public_policy",
+                "ignorePublicAcls": "ignore_public_acls",
+                "restrictPublicBuckets": "restrict_public_buckets"
+            },
+            "wasabi:index/getAccountAlias:getAccountAlias": {
+                "accountAlias": "account_alias"
+            },
+            "wasabi:index/getBucket:getBucket": {
+                "bucketDomainName": "bucket_domain_name",
+                "bucketRegionalDomainName": "bucket_regional_domain_name"
+            },
+            "wasabi:index/getBucketObject:getBucketObject": {
+                "cacheControl": "cache_control",
+                "contentDisposition": "content_disposition",
+                "contentEncoding": "content_encoding",
+                "contentLanguage": "content_language",
+                "contentLength": "content_length",
+                "contentType": "content_type",
+                "lastModified": "last_modified",
+                "sseKmsKeyId": "sse_kms_key_id",
+                "storageClass": "storage_class",
+                "versionId": "version_id"
+            },
+            "wasabi:index/getBucketObjects:getBucketObjects": {
+                "commonPrefixes": "common_prefixes",
+                "encodingType": "encoding_type",
+                "fetchOwner": "fetch_owner",
+                "maxKeys": "max_keys",
+                "startAfter": "start_after"
+            },
+            "wasabi:index/getGroup:getGroup": {
+                "groupId": "group_id",
+                "groupName": "group_name"
+            },
+            "wasabi:index/getGroupUser:getGroupUser": {
+                "userId": "user_id",
+                "userName": "user_name"
+            },
+            "wasabi:index/getPolicyDocument:getPolicyDocument": {
+                "overrideJson": "override_json",
+                "policyId": "policy_id",
+                "sourceJson": "source_json",
+                "statements": "statement"
+            },
+            "wasabi:index/getPolicyDocumentStatement:getPolicyDocumentStatement": {
+                "conditions": "condition",
+                "notActions": "not_actions",
+                "notPrincipals": "not_principals",
+                "notResources": "not_resources"
+            },
+            "wasabi:index/getRole:getRole": {
+                "assumeRolePolicy": "assume_role_policy",
+                "createDate": "create_date",
+                "maxSessionDuration": "max_session_duration",
+                "permissionsBoundary": "permissions_boundary",
+                "uniqueId": "unique_id"
+            },
+            "wasabi:index/getUser:getUser": {
+                "permissionsBoundary": "permissions_boundary",
+                "userId": "user_id",
+                "userName": "user_name"
+            },
+            "wasabi:index/group:Group": {
+                "uniqueId": "unique_id"
+            },
+            "wasabi:index/groupPolicy:GroupPolicy": {
+                "namePrefix": "name_prefix"
+            },
+            "wasabi:index/groupPolicyAttachment:GroupPolicyAttachment": {
+                "policyArn": "policy_arn"
+            },
+            "wasabi:index/policy:Policy": {
+                "namePrefix": "name_prefix"
+            },
+            "wasabi:index/policyAttachment:PolicyAttachment": {
+                "policyArn": "policy_arn"
+            },
+            "wasabi:index/role:Role": {
+                "assumeRolePolicy": "assume_role_policy",
+                "createDate": "create_date",
+                "forceDetachPolicies": "force_detach_policies",
+                "maxSessionDuration": "max_session_duration",
+                "namePrefix": "name_prefix",
+                "permissionsBoundary": "permissions_boundary",
+                "uniqueId": "unique_id"
+            },
+            "wasabi:index/rolePolicy:RolePolicy": {
+                "namePrefix": "name_prefix"
+            },
+            "wasabi:index/rolePolicyAttachment:RolePolicyAttachment": {
+                "policyArn": "policy_arn"
+            },
+            "wasabi:index/user:User": {
+                "forceDestroy": "force_destroy",
+                "permissionsBoundary": "permissions_boundary",
+                "uniqueId": "unique_id"
+            },
+            "wasabi:index/userLoginProfile:UserLoginProfile": {
+                "encryptedPassword": "encrypted_password",
+                "keyFingerprint": "key_fingerprint",
+                "passwordLength": "password_length",
+                "passwordResetRequired": "password_reset_required",
+                "pgpKey": "pgp_key"
+            },
+            "wasabi:index/userPolicy:UserPolicy": {
+                "namePrefix": "name_prefix"
+            },
+            "wasabi:index/userPolicyAttachment:UserPolicyAttachment": {
+                "policyArn": "policy_arn"
+            },
+            "wasabi:index:Provider": {
+                "accessKey": "access_key",
+                "allowedAccountIds": "allowed_account_ids",
+                "assumeRole": "assume_role",
+                "forbiddenAccountIds": "forbidden_account_ids",
+                "maxRetries": "max_retries",
+                "s3ForcePathStyle": "s3_force_path_style",
+                "secretKey": "secret_key",
+                "sharedCredentialsFile": "shared_credentials_file",
+                "skipCredentialsValidation": "skip_credentials_validation",
+                "skipMetadataApiCheck": "skip_metadata_api_check",
+                "skipRequestingAccountId": "skip_requesting_account_id"
+            }
+        },
+        "renamedConfigProperties": {
+            "accessKey": "access_key",
+            "allowedAccountIds": "allowed_account_ids",
+            "assumeRole": "assume_role",
+            "forbiddenAccountIds": "forbidden_account_ids",
+            "maxRetries": "max_retries",
+            "s3ForcePathStyle": "s3_force_path_style",
+            "secretKey": "secret_key",
+            "sharedCredentialsFile": "shared_credentials_file",
+            "skipCredentialsValidation": "skip_credentials_validation",
+            "skipMetadataApiCheck": "skip_metadata_api_check",
+            "skipRequestingAccountId": "skip_requesting_account_id"
+        }
+    }
+}

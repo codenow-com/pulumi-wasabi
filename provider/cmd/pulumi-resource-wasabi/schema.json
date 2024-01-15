@@ -1,0 +1,2829 @@
+{
+    "name": "wasabi",
+    "description": "A Pulumi package for creating and managing wasabi cloud resources.",
+    "keywords": [
+        "pulumi",
+        "wasabi",
+        "category/cloud"
+    ],
+    "homepage": "https://www.pulumi.com",
+    "license": "Apache-2.0",
+    "attribution": "This Pulumi package is based on the [`wasabi` Terraform Provider](https://github.com/codenow-com/terraform-provider-wasabi).",
+    "repository": "https://github.com/codenow-com/pulumi-wasabi",
+    "publisher": "CodeNOW",
+    "meta": {
+        "moduleFormat": "(.*)(?:/[^/]*)"
+    },
+    "language": {
+        "csharp": {
+            "packageReferences": {
+                "Pulumi": "3.*"
+            },
+            "compatibility": "tfbridge20"
+        },
+        "go": {
+            "importBasePath": "github.com/codenow-com/pulumi-wasabi/sdk/go/wasabi",
+            "generateResourceContainerTypes": true,
+            "generateExtraInputTypes": true
+        },
+        "nodejs": {
+            "packageDescription": "A Pulumi package for creating and managing wasabi cloud resources.",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/codenow-com/terraform-provider-wasabi)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-wasabi` repo](https://github.com/codenow-com/pulumi-wasabi/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-wasabi` repo](https://github.com/codenow-com/terraform-provider-wasabi/issues).",
+            "dependencies": {
+                "@pulumi/pulumi": "^3.0.0"
+            },
+            "devDependencies": {
+                "@types/mime": "^2.0.0",
+                "@types/node": "^10.0.0"
+            },
+            "compatibility": "tfbridge20",
+            "disableUnionOutputTypes": true
+        },
+        "python": {
+            "requires": {
+                "pulumi": "\u003e=3.0.0,\u003c4.0.0"
+            },
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/codenow-com/terraform-provider-wasabi)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-wasabi` repo](https://github.com/codenow-com/pulumi-wasabi/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-wasabi` repo](https://github.com/codenow-com/terraform-provider-wasabi/issues).",
+            "compatibility": "tfbridge20",
+            "pyproject": {}
+        }
+    },
+    "config": {
+        "variables": {
+            "accessKey": {
+                "type": "string",
+                "description": "The access key for API operations. You can retrieve this from the 'Security \u0026 Credentials' section of the AWS console.\n"
+            },
+            "allowedAccountIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "assumeRole": {
+                "$ref": "#/types/wasabi:config/assumeRole:assumeRole"
+            },
+            "endpoints": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/types/wasabi:config/endpoints:endpoints"
+                }
+            },
+            "forbiddenAccountIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "insecure": {
+                "type": "boolean",
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted,default value is `false`\n"
+            },
+            "maxRetries": {
+                "type": "integer",
+                "description": "The maximum number of times an AWS API request is being executed. If the API request still fails, an error is thrown.\n"
+            },
+            "profile": {
+                "type": "string",
+                "description": "The profile for API operations. If not set, the default profile created with `aws configure` will be used.\n"
+            },
+            "region": {
+                "type": "string",
+                "description": "The region where AWS operations will take place. Examples are us-east-1, us-west-2, etc.\n"
+            },
+            "s3ForcePathStyle": {
+                "type": "boolean",
+                "description": "Set this to true to force the request to use path-style addressing, i.e., http://s3.amazonaws.com/BUCKET/KEY. By\ndefault, the S3 client will use virtual hosted bucket addressing when possible (http://BUCKET.s3.amazonaws.com/KEY).\nSpecific to the Amazon S3 service.\n"
+            },
+            "secretKey": {
+                "type": "string",
+                "description": "The secret key for API operations. You can retrieve this from the 'Security \u0026 Credentials' section of the AWS console.\n"
+            },
+            "sharedCredentialsFile": {
+                "type": "string",
+                "description": "The path to the shared credentials file. If not set this defaults to ~/.aws/credentials.\n"
+            },
+            "skipCredentialsValidation": {
+                "type": "boolean",
+                "description": "Skip the credentials validation via STS API. Used for AWS API implementations that do not have STS\navailable/implemented.\n"
+            },
+            "skipMetadataApiCheck": {
+                "type": "boolean"
+            },
+            "skipRequestingAccountId": {
+                "type": "boolean",
+                "description": "Skip requesting the account ID. Used for AWS API implementations that do not have IAM/STS API and/or metadata API.\n"
+            },
+            "token": {
+                "type": "string",
+                "description": "session token. A session token is only required if you are using temporary security credentials.\n"
+            }
+        },
+        "defaults": [
+            "region"
+        ]
+    },
+    "types": {
+        "wasabi:config/assumeRole:assumeRole": {
+            "properties": {
+                "durationSeconds": {
+                    "type": "integer"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "policyArns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "sessionName": {
+                    "type": "string"
+                },
+                "transitiveTagKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:config/endpoints:endpoints": {
+            "properties": {
+                "iam": {
+                    "type": "string"
+                },
+                "s3": {
+                    "type": "string"
+                },
+                "sts": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/BucketCorsRule:BucketCorsRule": {
+            "properties": {
+                "allowedHeaders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "allowedMethods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "allowedOrigins": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "exposeHeaders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "maxAgeSeconds": {
+                    "type": "integer"
+                }
+            },
+            "type": "object",
+            "required": [
+                "allowedMethods",
+                "allowedOrigins"
+            ]
+        },
+        "wasabi:index/BucketGrant:BucketGrant": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                },
+                "uri": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "permissions",
+                "type"
+            ]
+        },
+        "wasabi:index/BucketLifecycleRule:BucketLifecycleRule": {
+            "properties": {
+                "abortIncompleteMultipartUploadDays": {
+                    "type": "integer"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "expiration": {
+                    "$ref": "#/types/wasabi:index/BucketLifecycleRuleExpiration:BucketLifecycleRuleExpiration"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "noncurrentVersionExpiration": {
+                    "$ref": "#/types/wasabi:index/BucketLifecycleRuleNoncurrentVersionExpiration:BucketLifecycleRuleNoncurrentVersionExpiration"
+                },
+                "noncurrentVersionTransitions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketLifecycleRuleNoncurrentVersionTransition:BucketLifecycleRuleNoncurrentVersionTransition"
+                    }
+                },
+                "prefix": {
+                    "type": "string"
+                },
+                "transitions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketLifecycleRuleTransition:BucketLifecycleRuleTransition"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "enabled"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "enabled",
+                        "id"
+                    ]
+                }
+            }
+        },
+        "wasabi:index/BucketLifecycleRuleExpiration:BucketLifecycleRuleExpiration": {
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "days": {
+                    "type": "integer"
+                },
+                "expiredObjectDeleteMarker": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/BucketLifecycleRuleNoncurrentVersionExpiration:BucketLifecycleRuleNoncurrentVersionExpiration": {
+            "properties": {
+                "days": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/BucketLifecycleRuleNoncurrentVersionTransition:BucketLifecycleRuleNoncurrentVersionTransition": {
+            "properties": {
+                "days": {
+                    "type": "integer"
+                },
+                "storageClass": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "storageClass"
+            ]
+        },
+        "wasabi:index/BucketLifecycleRuleTransition:BucketLifecycleRuleTransition": {
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "days": {
+                    "type": "integer"
+                },
+                "storageClass": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "storageClass"
+            ]
+        },
+        "wasabi:index/BucketLogging:BucketLogging": {
+            "properties": {
+                "targetBucket": {
+                    "type": "string"
+                },
+                "targetPrefix": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "targetBucket"
+            ]
+        },
+        "wasabi:index/BucketVersioning:BucketVersioning": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "mfaDelete": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/ProviderAssumeRole:ProviderAssumeRole": {
+            "properties": {
+                "durationSeconds": {
+                    "type": "integer"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "policyArns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "roleArn": {
+                    "type": "string"
+                },
+                "sessionName": {
+                    "type": "string"
+                },
+                "transitiveTagKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/ProviderEndpoint:ProviderEndpoint": {
+            "properties": {
+                "iam": {
+                    "type": "string"
+                },
+                "s3": {
+                    "type": "string"
+                },
+                "sts": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/getGroupUser:getGroupUser": {
+            "properties": {
+                "arn": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "arn",
+                "path",
+                "userId",
+                "userName"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "wasabi:index/getPolicyDocumentStatement:getPolicyDocumentStatement": {
+            "properties": {
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "conditions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/getPolicyDocumentStatementCondition:getPolicyDocumentStatementCondition"
+                    }
+                },
+                "effect": {
+                    "type": "string"
+                },
+                "notActions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "notPrincipals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/getPolicyDocumentStatementNotPrincipal:getPolicyDocumentStatementNotPrincipal"
+                    }
+                },
+                "notResources": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "principals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/getPolicyDocumentStatementPrincipal:getPolicyDocumentStatementPrincipal"
+                    }
+                },
+                "resources": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sid": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "wasabi:index/getPolicyDocumentStatementCondition:getPolicyDocumentStatementCondition": {
+            "properties": {
+                "test": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "variable": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "test",
+                "values",
+                "variable"
+            ]
+        },
+        "wasabi:index/getPolicyDocumentStatementNotPrincipal:getPolicyDocumentStatementNotPrincipal": {
+            "properties": {
+                "identifiers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "identifiers",
+                "type"
+            ]
+        },
+        "wasabi:index/getPolicyDocumentStatementPrincipal:getPolicyDocumentStatementPrincipal": {
+            "properties": {
+                "identifiers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "identifiers",
+                "type"
+            ]
+        }
+    },
+    "provider": {
+        "description": "The provider type for the wasabi package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
+        "properties": {
+            "accessKey": {
+                "type": "string",
+                "description": "The access key for API operations. You can retrieve this from the 'Security \u0026 Credentials' section of the AWS console.\n"
+            },
+            "allowedAccountIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "assumeRole": {
+                "$ref": "#/types/wasabi:index/ProviderAssumeRole:ProviderAssumeRole"
+            },
+            "endpoints": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/types/wasabi:index/ProviderEndpoint:ProviderEndpoint"
+                }
+            },
+            "forbiddenAccountIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "insecure": {
+                "type": "boolean",
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted,default value is `false`\n"
+            },
+            "maxRetries": {
+                "type": "integer",
+                "description": "The maximum number of times an AWS API request is being executed. If the API request still fails, an error is thrown.\n"
+            },
+            "profile": {
+                "type": "string",
+                "description": "The profile for API operations. If not set, the default profile created with `aws configure` will be used.\n"
+            },
+            "region": {
+                "type": "string",
+                "description": "The region where AWS operations will take place. Examples are us-east-1, us-west-2, etc.\n"
+            },
+            "s3ForcePathStyle": {
+                "type": "boolean",
+                "description": "Set this to true to force the request to use path-style addressing, i.e., http://s3.amazonaws.com/BUCKET/KEY. By\ndefault, the S3 client will use virtual hosted bucket addressing when possible (http://BUCKET.s3.amazonaws.com/KEY).\nSpecific to the Amazon S3 service.\n"
+            },
+            "secretKey": {
+                "type": "string",
+                "description": "The secret key for API operations. You can retrieve this from the 'Security \u0026 Credentials' section of the AWS console.\n"
+            },
+            "sharedCredentialsFile": {
+                "type": "string",
+                "description": "The path to the shared credentials file. If not set this defaults to ~/.aws/credentials.\n"
+            },
+            "skipCredentialsValidation": {
+                "type": "boolean",
+                "description": "Skip the credentials validation via STS API. Used for AWS API implementations that do not have STS\navailable/implemented.\n"
+            },
+            "skipMetadataApiCheck": {
+                "type": "boolean"
+            },
+            "skipRequestingAccountId": {
+                "type": "boolean",
+                "description": "Skip requesting the account ID. Used for AWS API implementations that do not have IAM/STS API and/or metadata API.\n"
+            },
+            "token": {
+                "type": "string",
+                "description": "session token. A session token is only required if you are using temporary security credentials.\n"
+            }
+        },
+        "required": [
+            "region"
+        ],
+        "inputProperties": {
+            "accessKey": {
+                "type": "string",
+                "description": "The access key for API operations. You can retrieve this from the 'Security \u0026 Credentials' section of the AWS console.\n"
+            },
+            "allowedAccountIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "assumeRole": {
+                "$ref": "#/types/wasabi:index/ProviderAssumeRole:ProviderAssumeRole"
+            },
+            "endpoints": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/types/wasabi:index/ProviderEndpoint:ProviderEndpoint"
+                }
+            },
+            "forbiddenAccountIds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "insecure": {
+                "type": "boolean",
+                "description": "Explicitly allow the provider to perform \"insecure\" SSL requests. If omitted,default value is `false`\n"
+            },
+            "maxRetries": {
+                "type": "integer",
+                "description": "The maximum number of times an AWS API request is being executed. If the API request still fails, an error is thrown.\n"
+            },
+            "profile": {
+                "type": "string",
+                "description": "The profile for API operations. If not set, the default profile created with `aws configure` will be used.\n"
+            },
+            "region": {
+                "type": "string",
+                "description": "The region where AWS operations will take place. Examples are us-east-1, us-west-2, etc.\n"
+            },
+            "s3ForcePathStyle": {
+                "type": "boolean",
+                "description": "Set this to true to force the request to use path-style addressing, i.e., http://s3.amazonaws.com/BUCKET/KEY. By\ndefault, the S3 client will use virtual hosted bucket addressing when possible (http://BUCKET.s3.amazonaws.com/KEY).\nSpecific to the Amazon S3 service.\n"
+            },
+            "secretKey": {
+                "type": "string",
+                "description": "The secret key for API operations. You can retrieve this from the 'Security \u0026 Credentials' section of the AWS console.\n"
+            },
+            "sharedCredentialsFile": {
+                "type": "string",
+                "description": "The path to the shared credentials file. If not set this defaults to ~/.aws/credentials.\n"
+            },
+            "skipCredentialsValidation": {
+                "type": "boolean",
+                "description": "Skip the credentials validation via STS API. Used for AWS API implementations that do not have STS\navailable/implemented.\n"
+            },
+            "skipMetadataApiCheck": {
+                "type": "boolean"
+            },
+            "skipRequestingAccountId": {
+                "type": "boolean",
+                "description": "Skip requesting the account ID. Used for AWS API implementations that do not have IAM/STS API and/or metadata API.\n"
+            },
+            "token": {
+                "type": "string",
+                "description": "session token. A session token is only required if you are using temporary security credentials.\n"
+            }
+        },
+        "requiredInputs": [
+            "region"
+        ]
+    },
+    "resources": {
+        "wasabi:index/accessKey:AccessKey": {
+            "properties": {
+                "encryptedSecret": {
+                    "type": "string"
+                },
+                "keyFingerprint": {
+                    "type": "string"
+                },
+                "pgpKey": {
+                    "type": "string"
+                },
+                "secret": {
+                    "type": "string",
+                    "secret": true
+                },
+                "sesSmtpPasswordV4": {
+                    "type": "string",
+                    "secret": true
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "encryptedSecret",
+                "keyFingerprint",
+                "secret",
+                "sesSmtpPasswordV4",
+                "status",
+                "user"
+            ],
+            "inputProperties": {
+                "pgpKey": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "user"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering AccessKey resources.\n",
+                "properties": {
+                    "encryptedSecret": {
+                        "type": "string"
+                    },
+                    "keyFingerprint": {
+                        "type": "string"
+                    },
+                    "pgpKey": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "secret": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "sesSmtpPasswordV4": {
+                        "type": "string",
+                        "secret": true
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/accountAlias:AccountAlias": {
+            "properties": {
+                "accountAlias": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "accountAlias"
+            ],
+            "inputProperties": {
+                "accountAlias": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "accountAlias"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering AccountAlias resources.\n",
+                "properties": {
+                    "accountAlias": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/accountPasswordPolicy:AccountPasswordPolicy": {
+            "properties": {
+                "allowUsersToChangePassword": {
+                    "type": "boolean"
+                },
+                "expirePasswords": {
+                    "type": "boolean"
+                },
+                "hardExpiry": {
+                    "type": "boolean"
+                },
+                "maxPasswordAge": {
+                    "type": "integer"
+                },
+                "minimumPasswordLength": {
+                    "type": "integer"
+                },
+                "passwordReusePrevention": {
+                    "type": "integer"
+                },
+                "requireLowercaseCharacters": {
+                    "type": "boolean"
+                },
+                "requireNumbers": {
+                    "type": "boolean"
+                },
+                "requireSymbols": {
+                    "type": "boolean"
+                },
+                "requireUppercaseCharacters": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "expirePasswords",
+                "hardExpiry",
+                "maxPasswordAge",
+                "passwordReusePrevention",
+                "requireLowercaseCharacters",
+                "requireNumbers",
+                "requireSymbols",
+                "requireUppercaseCharacters"
+            ],
+            "inputProperties": {
+                "allowUsersToChangePassword": {
+                    "type": "boolean"
+                },
+                "hardExpiry": {
+                    "type": "boolean"
+                },
+                "maxPasswordAge": {
+                    "type": "integer"
+                },
+                "minimumPasswordLength": {
+                    "type": "integer"
+                },
+                "passwordReusePrevention": {
+                    "type": "integer"
+                },
+                "requireLowercaseCharacters": {
+                    "type": "boolean"
+                },
+                "requireNumbers": {
+                    "type": "boolean"
+                },
+                "requireSymbols": {
+                    "type": "boolean"
+                },
+                "requireUppercaseCharacters": {
+                    "type": "boolean"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering AccountPasswordPolicy resources.\n",
+                "properties": {
+                    "allowUsersToChangePassword": {
+                        "type": "boolean"
+                    },
+                    "expirePasswords": {
+                        "type": "boolean"
+                    },
+                    "hardExpiry": {
+                        "type": "boolean"
+                    },
+                    "maxPasswordAge": {
+                        "type": "integer"
+                    },
+                    "minimumPasswordLength": {
+                        "type": "integer"
+                    },
+                    "passwordReusePrevention": {
+                        "type": "integer"
+                    },
+                    "requireLowercaseCharacters": {
+                        "type": "boolean"
+                    },
+                    "requireNumbers": {
+                        "type": "boolean"
+                    },
+                    "requireSymbols": {
+                        "type": "boolean"
+                    },
+                    "requireUppercaseCharacters": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/bucket:Bucket": {
+            "properties": {
+                "acl": {
+                    "type": "string"
+                },
+                "arn": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "bucketDomainName": {
+                    "type": "string"
+                },
+                "bucketPrefix": {
+                    "type": "string"
+                },
+                "bucketRegionalDomainName": {
+                    "type": "string"
+                },
+                "corsRules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketCorsRule:BucketCorsRule"
+                    }
+                },
+                "forceDestroy": {
+                    "type": "boolean"
+                },
+                "grants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketGrant:BucketGrant"
+                    }
+                },
+                "lifecycleRules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketLifecycleRule:BucketLifecycleRule"
+                    }
+                },
+                "loggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketLogging:BucketLogging"
+                    }
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "requestPayer": {
+                    "type": "string"
+                },
+                "versioning": {
+                    "$ref": "#/types/wasabi:index/BucketVersioning:BucketVersioning"
+                }
+            },
+            "required": [
+                "arn",
+                "bucket",
+                "bucketDomainName",
+                "bucketRegionalDomainName",
+                "region",
+                "requestPayer",
+                "versioning"
+            ],
+            "inputProperties": {
+                "acl": {
+                    "type": "string"
+                },
+                "arn": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "bucketPrefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "corsRules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketCorsRule:BucketCorsRule"
+                    }
+                },
+                "forceDestroy": {
+                    "type": "boolean"
+                },
+                "grants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketGrant:BucketGrant"
+                    }
+                },
+                "lifecycleRules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketLifecycleRule:BucketLifecycleRule"
+                    }
+                },
+                "loggings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/wasabi:index/BucketLogging:BucketLogging"
+                    }
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "requestPayer": {
+                    "type": "string"
+                },
+                "versioning": {
+                    "$ref": "#/types/wasabi:index/BucketVersioning:BucketVersioning"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Bucket resources.\n",
+                "properties": {
+                    "acl": {
+                        "type": "string"
+                    },
+                    "arn": {
+                        "type": "string"
+                    },
+                    "bucket": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "bucketDomainName": {
+                        "type": "string"
+                    },
+                    "bucketPrefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "bucketRegionalDomainName": {
+                        "type": "string"
+                    },
+                    "corsRules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/BucketCorsRule:BucketCorsRule"
+                        }
+                    },
+                    "forceDestroy": {
+                        "type": "boolean"
+                    },
+                    "grants": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/BucketGrant:BucketGrant"
+                        }
+                    },
+                    "lifecycleRules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/BucketLifecycleRule:BucketLifecycleRule"
+                        }
+                    },
+                    "loggings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/BucketLogging:BucketLogging"
+                        }
+                    },
+                    "policy": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "requestPayer": {
+                        "type": "string"
+                    },
+                    "versioning": {
+                        "$ref": "#/types/wasabi:index/BucketVersioning:BucketVersioning"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/bucketObject:BucketObject": {
+            "properties": {
+                "acl": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "cacheControl": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "contentBase64": {
+                    "type": "string"
+                },
+                "contentDisposition": {
+                    "type": "string"
+                },
+                "contentEncoding": {
+                    "type": "string"
+                },
+                "contentLanguage": {
+                    "type": "string"
+                },
+                "contentType": {
+                    "type": "string"
+                },
+                "etag": {
+                    "type": "string"
+                },
+                "forceDestroy": {
+                    "type": "boolean"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "source": {
+                    "type": "string"
+                },
+                "storageClass": {
+                    "type": "string"
+                },
+                "versionId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "bucket",
+                "contentType",
+                "etag",
+                "key",
+                "storageClass",
+                "versionId"
+            ],
+            "inputProperties": {
+                "acl": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "cacheControl": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "contentBase64": {
+                    "type": "string"
+                },
+                "contentDisposition": {
+                    "type": "string"
+                },
+                "contentEncoding": {
+                    "type": "string"
+                },
+                "contentLanguage": {
+                    "type": "string"
+                },
+                "contentType": {
+                    "type": "string"
+                },
+                "etag": {
+                    "type": "string"
+                },
+                "forceDestroy": {
+                    "type": "boolean"
+                },
+                "key": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "metadata": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "source": {
+                    "type": "string"
+                },
+                "storageClass": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "bucket",
+                "key"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering BucketObject resources.\n",
+                "properties": {
+                    "acl": {
+                        "type": "string"
+                    },
+                    "bucket": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "cacheControl": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "contentBase64": {
+                        "type": "string"
+                    },
+                    "contentDisposition": {
+                        "type": "string"
+                    },
+                    "contentEncoding": {
+                        "type": "string"
+                    },
+                    "contentLanguage": {
+                        "type": "string"
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "etag": {
+                        "type": "string"
+                    },
+                    "forceDestroy": {
+                        "type": "boolean"
+                    },
+                    "key": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "storageClass": {
+                        "type": "string"
+                    },
+                    "versionId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/bucketPolicy:BucketPolicy": {
+            "properties": {
+                "bucket": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "bucket",
+                "policy"
+            ],
+            "inputProperties": {
+                "bucket": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policy": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "bucket",
+                "policy"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering BucketPolicy resources.\n",
+                "properties": {
+                    "bucket": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policy": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/bucketPublicAccessBlock:BucketPublicAccessBlock": {
+            "properties": {
+                "blockPublicAcls": {
+                    "type": "boolean"
+                },
+                "blockPublicPolicy": {
+                    "type": "boolean"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "ignorePublicAcls": {
+                    "type": "boolean"
+                },
+                "restrictPublicBuckets": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "bucket"
+            ],
+            "inputProperties": {
+                "blockPublicAcls": {
+                    "type": "boolean"
+                },
+                "blockPublicPolicy": {
+                    "type": "boolean"
+                },
+                "bucket": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "ignorePublicAcls": {
+                    "type": "boolean"
+                },
+                "restrictPublicBuckets": {
+                    "type": "boolean"
+                }
+            },
+            "requiredInputs": [
+                "bucket"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering BucketPublicAccessBlock resources.\n",
+                "properties": {
+                    "blockPublicAcls": {
+                        "type": "boolean"
+                    },
+                    "blockPublicPolicy": {
+                        "type": "boolean"
+                    },
+                    "bucket": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "ignorePublicAcls": {
+                        "type": "boolean"
+                    },
+                    "restrictPublicBuckets": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/group:Group": {
+            "properties": {
+                "arn": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "uniqueId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "arn",
+                "name",
+                "uniqueId"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Group resources.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "uniqueId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/groupMembership:GroupMembership": {
+            "properties": {
+                "group": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "group",
+                "name",
+                "users"
+            ],
+            "inputProperties": {
+                "group": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "group",
+                "users"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering GroupMembership resources.\n",
+                "properties": {
+                    "group": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/groupPolicy:GroupPolicy": {
+            "properties": {
+                "group": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namePrefix": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "group",
+                "name",
+                "policy"
+            ],
+            "inputProperties": {
+                "group": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "namePrefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policy": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "group",
+                "policy"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering GroupPolicy resources.\n",
+                "properties": {
+                    "group": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "namePrefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policy": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/groupPolicyAttachment:GroupPolicyAttachment": {
+            "properties": {
+                "group": {
+                    "type": "string"
+                },
+                "policyArn": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "group",
+                "policyArn"
+            ],
+            "inputProperties": {
+                "group": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policyArn": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "group",
+                "policyArn"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering GroupPolicyAttachment resources.\n",
+                "properties": {
+                    "group": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policyArn": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/policy:Policy": {
+            "properties": {
+                "arn": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namePrefix": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "arn",
+                "name",
+                "policy"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "namePrefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "path": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policy": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "policy"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Policy resources.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "namePrefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "path": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policy": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/policyAttachment:PolicyAttachment": {
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "policyArn": {
+                    "type": "string"
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "policyArn"
+            ],
+            "inputProperties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policyArn": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "policyArn"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering PolicyAttachment resources.\n",
+                "properties": {
+                    "groups": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policyArn": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/role:Role": {
+            "properties": {
+                "arn": {
+                    "type": "string"
+                },
+                "assumeRolePolicy": {
+                    "type": "string"
+                },
+                "createDate": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "forceDetachPolicies": {
+                    "type": "boolean"
+                },
+                "maxSessionDuration": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namePrefix": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "permissionsBoundary": {
+                    "type": "string"
+                },
+                "uniqueId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "arn",
+                "assumeRolePolicy",
+                "createDate",
+                "name",
+                "uniqueId"
+            ],
+            "inputProperties": {
+                "assumeRolePolicy": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "forceDetachPolicies": {
+                    "type": "boolean"
+                },
+                "maxSessionDuration": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "namePrefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "path": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "permissionsBoundary": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "assumeRolePolicy"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Role resources.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "assumeRolePolicy": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "forceDetachPolicies": {
+                        "type": "boolean"
+                    },
+                    "maxSessionDuration": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "namePrefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "path": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "permissionsBoundary": {
+                        "type": "string"
+                    },
+                    "uniqueId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/rolePolicy:RolePolicy": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "namePrefix": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "policy",
+                "role"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "namePrefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "policy",
+                "role"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering RolePolicy resources.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "namePrefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policy": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/rolePolicyAttachment:RolePolicyAttachment": {
+            "properties": {
+                "policyArn": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "policyArn",
+                "role"
+            ],
+            "inputProperties": {
+                "policyArn": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "role": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "policyArn",
+                "role"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering RolePolicyAttachment resources.\n",
+                "properties": {
+                    "policyArn": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "role": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/user:User": {
+            "properties": {
+                "arn": {
+                    "type": "string"
+                },
+                "forceDestroy": {
+                    "type": "boolean",
+                    "description": "Delete user even if it has non-Terraform-managed IAM access keys, login profile or MFA devices\n"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "permissionsBoundary": {
+                    "type": "string"
+                },
+                "uniqueId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "arn",
+                "name",
+                "uniqueId"
+            ],
+            "inputProperties": {
+                "forceDestroy": {
+                    "type": "boolean",
+                    "description": "Delete user even if it has non-Terraform-managed IAM access keys, login profile or MFA devices\n"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "permissionsBoundary": {
+                    "type": "string"
+                }
+            },
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering User resources.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "forceDestroy": {
+                        "type": "boolean",
+                        "description": "Delete user even if it has non-Terraform-managed IAM access keys, login profile or MFA devices\n"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "permissionsBoundary": {
+                        "type": "string"
+                    },
+                    "uniqueId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/userGroupMembership:UserGroupMembership": {
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "groups",
+                "user"
+            ],
+            "inputProperties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "groups",
+                "user"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering UserGroupMembership resources.\n",
+                "properties": {
+                    "groups": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "user": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/userLoginProfile:UserLoginProfile": {
+            "properties": {
+                "encryptedPassword": {
+                    "type": "string"
+                },
+                "keyFingerprint": {
+                    "type": "string"
+                },
+                "passwordLength": {
+                    "type": "integer"
+                },
+                "passwordResetRequired": {
+                    "type": "boolean"
+                },
+                "pgpKey": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "encryptedPassword",
+                "keyFingerprint",
+                "pgpKey",
+                "user"
+            ],
+            "inputProperties": {
+                "passwordLength": {
+                    "type": "integer",
+                    "willReplaceOnChanges": true
+                },
+                "passwordResetRequired": {
+                    "type": "boolean",
+                    "willReplaceOnChanges": true
+                },
+                "pgpKey": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "user": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "pgpKey",
+                "user"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering UserLoginProfile resources.\n",
+                "properties": {
+                    "encryptedPassword": {
+                        "type": "string"
+                    },
+                    "keyFingerprint": {
+                        "type": "string"
+                    },
+                    "passwordLength": {
+                        "type": "integer",
+                        "willReplaceOnChanges": true
+                    },
+                    "passwordResetRequired": {
+                        "type": "boolean",
+                        "willReplaceOnChanges": true
+                    },
+                    "pgpKey": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "user": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/userPolicy:UserPolicy": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "namePrefix": {
+                    "type": "string"
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "policy",
+                "user"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "namePrefix": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "policy": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "policy",
+                "user"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering UserPolicy resources.\n",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "namePrefix": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "policy": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "wasabi:index/userPolicyAttachment:UserPolicyAttachment": {
+            "properties": {
+                "policyArn": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "policyArn",
+                "user"
+            ],
+            "inputProperties": {
+                "policyArn": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "user": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "policyArn",
+                "user"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering UserPolicyAttachment resources.\n",
+                "properties": {
+                    "policyArn": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "user": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "functions": {
+        "wasabi:index/getAccountAlias:getAccountAlias": {
+            "outputs": {
+                "description": "A collection of values returned by getAccountAlias.\n",
+                "properties": {
+                    "accountAlias": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "accountAlias",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getBucket:getBucket": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getBucket.\n",
+                "properties": {
+                    "bucket": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bucket"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBucket.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "bucket": {
+                        "type": "string"
+                    },
+                    "bucketDomainName": {
+                        "type": "string"
+                    },
+                    "bucketRegionalDomainName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "region": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arn",
+                    "bucket",
+                    "bucketDomainName",
+                    "bucketRegionalDomainName",
+                    "region",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getBucketObject:getBucketObject": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getBucketObject.\n",
+                "properties": {
+                    "bucket": {
+                        "type": "string"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "range": {
+                        "type": "string"
+                    },
+                    "versionId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bucket",
+                    "key"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBucketObject.\n",
+                "properties": {
+                    "body": {
+                        "type": "string"
+                    },
+                    "bucket": {
+                        "type": "string"
+                    },
+                    "cacheControl": {
+                        "type": "string"
+                    },
+                    "contentDisposition": {
+                        "type": "string"
+                    },
+                    "contentEncoding": {
+                        "type": "string"
+                    },
+                    "contentLanguage": {
+                        "type": "string"
+                    },
+                    "contentLength": {
+                        "type": "integer"
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "etag": {
+                        "type": "string"
+                    },
+                    "expiration": {
+                        "type": "string"
+                    },
+                    "expires": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "key": {
+                        "type": "string"
+                    },
+                    "lastModified": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "range": {
+                        "type": "string"
+                    },
+                    "sseKmsKeyId": {
+                        "type": "string"
+                    },
+                    "storageClass": {
+                        "type": "string"
+                    },
+                    "versionId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "body",
+                    "bucket",
+                    "cacheControl",
+                    "contentDisposition",
+                    "contentEncoding",
+                    "contentLanguage",
+                    "contentLength",
+                    "contentType",
+                    "etag",
+                    "expiration",
+                    "expires",
+                    "key",
+                    "lastModified",
+                    "metadata",
+                    "sseKmsKeyId",
+                    "storageClass",
+                    "versionId",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getBucketObjects:getBucketObjects": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getBucketObjects.\n",
+                "properties": {
+                    "bucket": {
+                        "type": "string"
+                    },
+                    "delimiter": {
+                        "type": "string"
+                    },
+                    "encodingType": {
+                        "type": "string"
+                    },
+                    "fetchOwner": {
+                        "type": "boolean"
+                    },
+                    "maxKeys": {
+                        "type": "integer"
+                    },
+                    "prefix": {
+                        "type": "string"
+                    },
+                    "startAfter": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bucket"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBucketObjects.\n",
+                "properties": {
+                    "bucket": {
+                        "type": "string"
+                    },
+                    "commonPrefixes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "delimiter": {
+                        "type": "string"
+                    },
+                    "encodingType": {
+                        "type": "string"
+                    },
+                    "fetchOwner": {
+                        "type": "boolean"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "keys": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "maxKeys": {
+                        "type": "integer"
+                    },
+                    "owners": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "prefix": {
+                        "type": "string"
+                    },
+                    "startAfter": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bucket",
+                    "commonPrefixes",
+                    "keys",
+                    "owners",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getGroup:getGroup": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getGroup.\n",
+                "properties": {
+                    "groupName": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "groupName"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getGroup.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "groupId": {
+                        "type": "string"
+                    },
+                    "groupName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/getGroupUser:getGroupUser"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arn",
+                    "groupId",
+                    "groupName",
+                    "path",
+                    "users",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getPolicy:getPolicy": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getPolicy.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arn"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getPolicy.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "policy": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arn",
+                    "description",
+                    "name",
+                    "path",
+                    "policy",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getPolicyDocument:getPolicyDocument": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getPolicyDocument.\n",
+                "properties": {
+                    "overrideJson": {
+                        "type": "string"
+                    },
+                    "policyId": {
+                        "type": "string"
+                    },
+                    "sourceJson": {
+                        "type": "string"
+                    },
+                    "statements": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/getPolicyDocumentStatement:getPolicyDocumentStatement"
+                        }
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getPolicyDocument.\n",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "json": {
+                        "type": "string"
+                    },
+                    "overrideJson": {
+                        "type": "string"
+                    },
+                    "policyId": {
+                        "type": "string"
+                    },
+                    "sourceJson": {
+                        "type": "string"
+                    },
+                    "statements": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/wasabi:index/getPolicyDocumentStatement:getPolicyDocumentStatement"
+                        }
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "json",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getRole:getRole": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getRole.\n",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getRole.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "assumeRolePolicy": {
+                        "type": "string"
+                    },
+                    "createDate": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "maxSessionDuration": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "permissionsBoundary": {
+                        "type": "string"
+                    },
+                    "uniqueId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arn",
+                    "assumeRolePolicy",
+                    "createDate",
+                    "description",
+                    "maxSessionDuration",
+                    "name",
+                    "path",
+                    "permissionsBoundary",
+                    "uniqueId",
+                    "id"
+                ]
+            }
+        },
+        "wasabi:index/getUser:getUser": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getUser.\n",
+                "properties": {
+                    "userName": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "userName"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getUser.\n",
+                "properties": {
+                    "arn": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "permissionsBoundary": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "userName": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "arn",
+                    "path",
+                    "permissionsBoundary",
+                    "userId",
+                    "userName",
+                    "id"
+                ]
+            }
+        }
+    }
+}

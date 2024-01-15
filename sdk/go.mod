@@ -1,4 +1,4 @@
-module github.com/pulumi/pulumi-xyz/sdk
+module github.com/codenow-com/pulumi-wasabi/sdk
 
 go 1.17
 
